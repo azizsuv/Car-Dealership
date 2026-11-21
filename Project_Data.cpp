@@ -13,7 +13,7 @@ class Car {
 	bool empty;
 	
 	struct Carserve {
-	string type;
+	string serv;
 	double cost;
 	Carserve *next;
 	} *head;
@@ -45,4 +45,26 @@ class Car {
 	int getid() {
 		return id;
 	}
+	
+	string getname() {
+		return name;
+	}
+	
+	double getprice() {
+		returnn price;
+	}
+	
+	bool getempty() {
+		return empty;
+	}
+	
+	void addCarserve(string s, double c) {
+		Carserve *newcar = new Carserve;
+		newcar -> serv = s;
+		newcar -> cost = c;
+		newcar -> next = head;
+		head = newcar;
+	}
+	
+	void print() 
 };

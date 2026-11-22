@@ -58,7 +58,7 @@ class Car {
 		return empty;
 	}
 	
-	void addCarserve(string s, double c) {
+	void addcarserve(string s, double c) {
 		Carserve *newcar = new Carserve;
 		newcar -> serv = s;
 		newcar -> cost = c;
@@ -66,5 +66,29 @@ class Car {
 		head = newcar;
 	}
 	
-	void print() 
+	void print() {
+		Carserve *temp = head;
+		while(temp != NULL) {
+			cout << "Service : " << temp -> serve <<
+			" , Cost : " << temp -> cost << "$" << endl;
+			temp = temp -> next;
+		}
+	}
 };
+	
+class Dealer {
+	private:
+	car car[15];
+	string file;
+	
+	public:
+	Dealer() {
+		file = "Cars.txt";
+		load();
+	}
+		
+	~Dealer() {
+		save();
+	}
+};
+

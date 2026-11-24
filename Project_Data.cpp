@@ -21,7 +21,7 @@ class Car {
 	public:
 	car() {
 		id = 0;
-		price = 
+		price = 0;
 		name = "";
 		empty = true;
 		head = NULL;
@@ -55,7 +55,7 @@ class Car {
 	}
 	
 	double getprice() {
-		returnn price;
+		return price;
 	}
 	
 	bool getempty() {
@@ -227,7 +227,7 @@ class Dealer {
 };
 
 int main() {
-	Dealer aziz;
+	Dealer az;
 	int choice;
 	
 	do {
@@ -243,9 +243,33 @@ int main() {
 		
 		switch(choice) {
 			case 1:
-			aziz.add();
+			az.add();
 			break;
-		}
+			
+			case 2:
+			az.edit();
+			break;
+			
+			case 3:
+			az.delete();
+			break;
+			
+			case 4:
+			az.print();
+			break;
+			
+			case 5:
+			az.search();
+			break;
+			
+			case 6:
+			cout << "Exiting ..." << endl;
+			
+			default:
+			cout << "Invalid input, try again ..." << endl;
+			break;
+			
+		} while(choice != 6);
 	}
 }
 

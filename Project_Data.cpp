@@ -19,7 +19,7 @@ class Car {
 	} *head;
 	
 	public:
-	car() {
+	Car() {
 		id = 0;
 		price = 0;
 		name = "";
@@ -38,7 +38,7 @@ class Car {
 		price = p;
 	}
 	
-	void setempy(bool s) {
+	void setempty(bool s) {
 		empty = s;
 	}
 	
@@ -73,7 +73,7 @@ class Car {
 	void printserve() {
 		Carserve *temp = head;
 		while(temp != NULL) {
-			cout << "Service : " << temp -> serve <<
+			cout << "Service : " << temp -> serv <<
 			" , Cost : " << temp -> cost << "$" << endl;
 			temp = temp -> next;
 		}
@@ -82,7 +82,7 @@ class Car {
 	
 class Dealer {
 	private:
-	car car[15];
+	Car cars[15];
 	string file;
 	
 	public:
@@ -100,9 +100,9 @@ class Dealer {
 	}
 	
 	void load() {
-		ifstream in(file.c_str())
+		ifstream in(file.c_str());
 		if(!in) return;
-		in id;
+		int id;
 		double price;
 		string n;
 		while(in >> id >> n >> price) {
@@ -116,8 +116,8 @@ class Dealer {
 		ofstream out(file.c_str());
 		for(int i = 0; i < 15; i++) {
 			if(!cars[i].getempty()) {
-				cout << cars[i].getid() 
-				<< " " cars[i].getname() 
+				out << cars[i].getid() 
+				<< " " << cars[i].getname() 
 				<< " " << cars[i].getprice() 
 				<< endl;
 			}
@@ -159,14 +159,14 @@ class Dealer {
 		cout << "Enter new name - or 'No' for No new name : ";
 		cin >> n;
 		if(n != "No") {
-			cars[i].setname(n);
+			cars[d].setname(n);
 		} else {
 			cout << "No modify on Name ..." << endl;
 		}
 		
 		cout << "Enter new price : ";
 		cin >> p;
-		cars[i].setprice(p);
+		cars[d].setprice(p);
 		cout << "Add a service,";
 		cout << " or enter 'No' for no service : ";
 		cin >> s;
@@ -180,16 +180,16 @@ class Dealer {
 		}
 	}
 	
-	void delete() {
+	void Delete() {
 		int i;
 		cout << "Enter car ID : ";
 		cin >> i;
-		int d = getempty(i);
+		int d = getHASH(i);
 		if(cars[d].getempty() || cars[d].getid() != i) {
 			cout << "Sorry car not found ..." << endl;
 			return;
 		}
-		caars[d].setempty(true);
+		cars[d].setempty(true);
 		cout << "The car has been deleted ..." << endl;
 	}
 	
@@ -198,7 +198,7 @@ class Dealer {
 		cout << "Enter ID for searching : ";
 		cin >> i;
 		int d = getHASH(i);
-		if (cars[d].getempty() || cars[d].getid() != id) {
+		if (cars[d].getempty() || cars[d].getid() != i) {
             cout << "Car not found ..." << endl;;
             return;
         }
@@ -214,9 +214,9 @@ class Dealer {
 	
 	void print() {
 		cout << " - all cars - " << endl;
-		cout << setw(10) << "ID" << setw(10) <<
+		cout << left << setw(10) << "ID" << setw(20) <<
 		"Name" << setw(10) << "price" << endl;
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
             if (!cars[i].getempty()) {
                 cout << left << setw(10) << cars[i].getid() 
                      << setw(20) << cars[i].getname()      
@@ -232,6 +232,8 @@ int main() {
 	
 	do {
 		cout << endl;
+		cout << " - Cars System - " << endl;
+		cout << " Main Menu" << endl;
 		cout << " 1. Add car" << endl;
 		cout << " 2. Edit car" << endl;
 		cout << " 3. Delete car" << endl;
@@ -251,7 +253,7 @@ int main() {
 			break;
 			
 			case 3:
-			az.delete();
+			az.Delete();
 			break;
 			
 			case 4:
@@ -264,12 +266,15 @@ int main() {
 			
 			case 6:
 			cout << "Exiting ..." << endl;
+			break;
 			
 			default:
 			cout << "Invalid input, try again ..." << endl;
 			break;
 			
-		} while(choice != 6);
-	}
+		} 
+	} while(choice != 6);
+	
+	return 0;
 }
 

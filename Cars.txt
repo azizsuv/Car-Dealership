@@ -1,1 +1,12 @@
-1 nisssssssssan 100
+1 camry 27800
+oil_change 120
+-----------
+2 altima_sr 23200
+wash 30
+-----------
+3 tahoe 48900
+tires 330
+-----------
+4 yaris_white 1680
+polishing 200
+-----------

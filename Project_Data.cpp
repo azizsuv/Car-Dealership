@@ -70,6 +70,27 @@ class Car {
 		head = newcar;
 	}
 	
+	void saveserv(ofstream &out) {
+		Carserve *temp = head;
+		while(temp != NULL) {
+			out << temp -> serv << " " << temp -> cost << endl;
+			temp = temp -> next;
+		}
+		out << "-----------" << endl;
+	}
+	
+	void loadserv(ifstream &in) {
+		string s;
+		double c;
+		while(in >> s) {
+			if(s == "-----------") {
+				break;
+			}
+			in >> c;
+			addcarserve(s, c);
+		}
+    }
+	
 	void printserve() {
 		Carserve *temp = head;
 		while(temp != NULL) {
@@ -105,9 +126,11 @@ class Dealer {
 		int id;
 		double price;
 		string n;
+		
 		while(in >> id >> n >> price) {
 			int d = getHASH(id);
 			cars[d].setcar(id , n, price);
+			cars[d].loadserv(in);
 		}
 		in.close();
 	}
@@ -120,6 +143,7 @@ class Dealer {
 				<< " " << cars[i].getname() 
 				<< " " << cars[i].getprice() 
 				<< endl;
+				cars[i].saveserv(out);
 			}
 		}
 		out.close();
@@ -133,11 +157,12 @@ class Dealer {
 		cin >> i;
 		cout << "Enter car Name : ";
 		cin >> n;
-		cout << "Enter car price : ";
+		cout << "Enter car Price : ";
 		cin >> p;
 		int d = getHASH(i);
 		if(cars[d].getempty() == false) {
-			cout << "sorry this spot its taken by another CAR ..." 
+			cout << "sorry this spot its taken"
+			<< "by another CAR ..." 
 			<< endl;
 			return;
 		}
@@ -156,27 +181,32 @@ class Dealer {
 			cout << "Sorry car not found ..." << endl;
 			return;
 		}
-		cout << "Enter new name - or 'No' for No new name : ";
+		cout << "Enter new name - or 'NO' to keep old name : ";
 		cin >> n;
-		if(n != "No") {
+		if(n != "NO") {
 			cars[d].setname(n);
 		} else {
 			cout << "No modify on Name ..." << endl;
 		}
 		
-		cout << "Enter new price : ";
+		cout << "Enter new price - or '0' to keep old price : ";
 		cin >> p;
-		cars[d].setprice(p);
+		if(p != 0) {
+			cars[d].setprice(p);
+		} else {
+			cout << "NO modify on price ..." << endl;
+		}
 		cout << "Add a service,";
-		cout << " or enter 'No' for no service : ";
+		cout << " or enter 'NO' for no service : ";
 		cin >> s;
-		if(s != "No") {
+		if(s != "NO") {
 			cout << "Enter cost of service : ";
 			cin >> c;
+			cout << "Service added successfully ..." << endl;
 			
 			cars[d].addcarserve(s, c);
 		} else {
-			cout << "No services added ..." << endl;
+			cout << "NO services added ..." << endl;
 		}
 	}
 	
@@ -207,7 +237,6 @@ class Dealer {
         cout << "ID : " << cars[d].getid() << endl;
         cout << "Name : " << cars[d].getname() << endl;   
         cout << "Price : $" << cars[d].getprice() << endl; 
-        
         cout << "car services : " << endl;; 
         cars[d].printserve();
 	}
